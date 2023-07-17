@@ -14,26 +14,48 @@ Uma API pode ser considerada RESTful quando ela utiliza em sua implementação o
 <b>REST</b> é algo abstrato, como um modelo arquitetural, enquanto que <b>RESTful</b> é algo mais concreto, como a implementação deste modelo em alguma API. Então, para criar uma API <b>RESTful</b> é preciso conhecer a arquitetura <b>REST</b> e também aplicá-la corretamente.
 <b>REST</b> requer que os cinco princípios fundamentais definidos por Fielding sejam rigidamente seguidos (o sexto não é fundamental para caracterizar uma aplicação como <b>REST</b>, mas no contexto atual de onde temos uma adoção cada vez maior de microsserviços tem sido primordial).
 
-## Boas práticas gerais
+## Princípios do REST 
+*	<b>Client-Server</b> - Separar as responsabilidade do frontend do backend. Esse é um conceito bem comum. Separar o front do back há ganhos significativos em testes, escalabilidade com reflexos até na organização dos times dentro da empresa.
+*	<b>Stateless</b> - O servidor não mantém estado. Cada solicitação do client deve conter informações necessárias para o server entender a solicitação. O estado da sessão é mantido inteiramente no client.
+*	<b>Cacheable</b> - A resposta de uma solicitação deve implicitamente ou explicitamente informar se o dado pode ser mantido em cache ou não.
+O cache deve ser mantido e gerenciado pelo Client.
+* <b>Uniform interface</b> - Este principio é definido por quatro restrições: 
+  *	Identificar os recursos (URI)
+  *	Manipular recursos através de representações (Verbos HTTP).
+  *	Mensagens auto-descritivas, cada requisição deve conter informações suficientes para o server processar a informação.
+  *	HATEOAS - Hypermedia As The Engine Of Application State. 
 
-* Dê a todas as coisas um Identificador</br>
-Utilizamos "coisas" ao invés do termo formalmente correto "recurso" porque esse é um principio simples que não deveria ser escondido por trás da terminologia. 
-Se você pensar sobre os sistemas que as pessoas constroem, há usualmente um conjunto de abstrações chave que merecem ser identificadas. 
-Tudo o que deveria ser identificado deveria obviamente ter um ID. Na Web, há um conceito unificado para IDs: "A URI". URIs compõe um namespace global,e utilizando URIs para identificar seus recursos chave significa ter um ID único e global
+## Medindo a Maturidade de sua API - Richardson Maturity Model
+Fontes: https://martinfowler.com/articles/richardsonMaturityModel.html
 
-* Vincule as coisas</br>
-Use URIs para identificar tudo o que precisar ser identificado, especifique todos os recursos de "alto nível" que seu aplicativo oferece, se eles representam itens individuais, conjuntos de itens, objetos virtuais e físicos, ou resultados de computação.
-o	Utilize métodos padronizados
-Para que clientes possam interagir com seus recursos, eles devem implementar o protocolo de aplicação padrão (HTTP) corretamente, isto é, utilizar os métodos padrão: GET, PUT, POST e DELETE.
+### O que é esse modelo?
+É um modelo criado por Leonard Richardson que quebra os elementos de uma API REST em 3 níveis. Sendo assim para você atingir o REST "real" você teria que alcançar o nível 3.
 
-* Recursos com múltiplas representações</br>
-Ofereça diversos formatos dos recursos para diferentes necessidades.
+### Devemos tentar alcançar o nível mais alto de maturidade sempre?
+Você deve fazer o que faz sentido para sua aplicação. 
 
-* Comunique sem estado (STATELESS)</br>
-Requisições feitas por um cliente a um serviço REST devem conter todas as informações necessárias para que o servidor as interprete e as execute corretamente. Clientes não devem depender de dados previamente armazenados no servidor para processar uma requisição. Qualquer informação de estado deve ser mantida pelo cliente e não pelo servidor. Isso reduz a necessidade de grandes quantidades de recursos físicos, como memória e disco, e também melhora a escalabilidade de um serviço REST.</br>
-É justamente por essa característica que a Web consegue ter uma escalabilidade praticamente infinita, pois ela não precisa manter as informações de estado de cada um dos clientes.</br>
-Esse é um dos princípios mais difíceis de ser aplicado em um serviço REST, pois é muito comum que aplicações mantenham estado entre requisições de clientes. Um exemplo dessa situação acontece quando precisamos armazenar os dados dos usuários que estão autenticados na aplicação.
+Uma breve explicação de cada nível.
 
+* Nível 0: HTTP
+Você usa HTTP como forma de comunicação sem qualquer critério para a utilização de verbos, ou de rotas.
+
+* Nível 1: HTTP + Recursos
+Sua API está exposta (roteada) seguindo o modelo de recursos. Como /users/ para listar todos os usuários e /users/123/ para obter um usuário especifico.
+
+* Nível 2: HTTP + Recursos + Verbos
+Os verbos HTTP são usados de forma semântica na sua API. GET para leitura, POST para inserir, PUT para substituir um registro, DELETE para excluir...
+
+* Nível 3: HTTP + Recursos + Verbos + HATEOAS
+A sua API deve retornar uma lista de recursos (rotas) com tudo o que é possível fazer a partir da chamada original.
+
+>GET /products/123 </br>
+>{                 </br>
+>  "id": 123,</br>
+>  "name": "Orange"</br>
+>  "links": [  </br>
+>       {"rel": "Suppliers", "href": "/suppliers/?product=123"} </br>
+>  ] </br>
+>} </br>
 
 </details>
 
@@ -41,11 +63,11 @@ Esse é um dos princípios mais difíceis de ser aplicado em um serviço REST, p
 Os princípios do REST diz que todo recurso deve possuir uma identificação única. Essa identificação serve para que a aplicação consiga diferenciar qual dos recursos deve ser manipulado em uma determinada solicitação.
 A identificação do recurso deve ser feita utilizando-se o conceito de URI (Uniform Resource Identifier), que é um dos padrões utilizados pela Web. 
 Alguns exemplos de URIs:
->https://{servidor-rest.com.br}/{app-contexto}/{versão-api}/{recurso}
->https://{servidor-rest.com.br}/{app-contexto}/{versão-api}/{recurso}[?{parâmetro}&{parâmetro}]
->https://{servidor-rest.com.br}/{app-contexto}/{versão-api}/{recurso}/{id}
->https://{servidor-rest.com.br}/{app-contexto}/{versão-api}/{recurso}/{id}/{id}
->https://{servidor-rest.com.br}/{app-contexto}/{versão-api}/{recurso}/{id}/{sub-recurso}
->https://{servidor-rest.com.br}/{app-contexto}/{versão-api}/{recurso}/{id}/{sub-recurso}[?{parâmetro}&{parâmetro}]
->https://{servidor-rest.com.br}/{app-contexto}/{versão-api}/{recurso}/{id}/{sub-recurso}/{id-subrecurso}
+>https://{servidor-rest.com.br}/{app-contexto}/{versão-api}/{recurso} </br>
+>https://{servidor-rest.com.br}/{app-contexto}/{versão-api}/{recurso}[?{parâmetro}&{parâmetro}] </br>
+>https://{servidor-rest.com.br}/{app-contexto}/{versão-api}/{recurso}/{id} </br>
+>https://{servidor-rest.com.br}/{app-contexto}/{versão-api}/{recurso}/{id}/{id} </br>
+>https://{servidor-rest.com.br}/{app-contexto}/{versão-api}/{recurso}/{id}/{sub-recurso} </br>
+>https://{servidor-rest.com.br}/{app-contexto}/{versão-api}/{recurso}/{id}/{sub-recurso}[?{parâmetro}&{parâmetro}] </br>
+>https://{servidor-rest.com.br}/{app-contexto}/{versão-api}/{recurso}/{id}/{sub-recurso}/{id-subrecurso} </br>
 
