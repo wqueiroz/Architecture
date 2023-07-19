@@ -1,7 +1,7 @@
 # REST API Best Practices
 
 <details>
-  <summary>Introdução</summary>
+  <summary>Fundamentação Básica</summary>
 </br>
 
   **Representational State Transfer**, abreviado como <b>REST</b>, não é uma tecnologia, uma biblioteca, e nem tampouco uma arquitetura, mas sim um modelo a ser utilizado para se projetar arquiteturas de software distribuído, baseadas em comunicação via rede.
@@ -59,9 +59,35 @@ A sua API deve retornar uma lista de recursos (rotas) com tudo o que é possíve
 
 </details>
 
-## Mantenha a consistência de padrões nas nomenclaturas
-Os princípios do REST diz que todo recurso deve possuir uma identificação única. Essa identificação serve para que a aplicação consiga diferenciar qual dos recursos deve ser manipulado em uma determinada solicitação.
-A identificação do recurso deve ser feita utilizando-se o conceito de URI (Uniform Resource Identifier), que é um dos padrões utilizados pela Web. 
+## Boas práticas
+Com base nos princípios do REST, descritas acima, é possível definir algumas boas práticas na implementação de uma REST API, as quais nos darão uma padronização e uma facilidade de leitura dos "utilizadores" das APIs, se os mesmos conhecerem os "princípios do REST" :-). 
+
+> Curiosidade:
+> * <b>URL</b> é associar um endereço remoto com um nome de recurso na Internet.</br>
+>   Pode ser decomposta como: protocolo de comunicação + URI. </br>
+>   Exemplo: [<b>https://</b>petstore3.swagger.io/api/v3/pet/findByStatus?status=pending](https://petstore3.swagger.io/api/v3/pet/findByStatus?status=pending)
+>    </br>
+> * <b>URI</b> é o identificador do recurso. Pode ser uma imagem, uma página, etc, pois tudo o que está disponível na internet precisa de um identificador único para que não seja confundido.</br>
+>   Exemplo: petstore3.swagger.io/api/v3/pet/findByStatus?status=pending</br>
+seja confundido.
+
+### Identificar os recursos (URI)
+A REST API usam Identificadores Uniformes de Recursos (URIs) para encontrar recursos. Cada recurso DEVE possuir uma identificação única. Essa identificação serve para que a aplicação consiga diferenciar qual dos recursos deve ser manipulado em uma determinada solicitação.
+
+Uma URI pode ser decomposta em:
+*
+> {servidor-rest.com.br}/{app-contexto}/{recurso}[/id][/sub-recurso][/id-subrecurso] </br>
+* {servidor-rest.com.br} : DNS ou IP do host onde está hospedada a API. Exemplo: petstore3.swagger.io
+* {app-context} : especifica o contexto de chamada da aplicação no servidor interno. Podendo ser composta de formas diferentes. Recomenda-se a utilização de versão.
+* {resource} : nome do recurso sendo acessado.
+* {id} : identificador do recurso
+* {sub-recurso} :
+* {id-subrecurso} :
+
+  
+A identificação do recurso deve ser feita utilizando-se o conceito de URI (Uniform Resource Identifier), que é um dos padrões utilizados pela Web. Alguns exemplos de URIs:
+
+
 Alguns exemplos de URIs:
 >https://{servidor-rest.com.br}/{app-contexto}/{versão-api}/{recurso} </br>
 >https://{servidor-rest.com.br}/{app-contexto}/{versão-api}/{recurso}[?{parâmetro}&{parâmetro}] </br>
