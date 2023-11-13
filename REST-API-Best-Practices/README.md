@@ -1,6 +1,7 @@
 # API Architectural Styles
 
-* REST (Representational State Transfer): Um campeão de simplicidade e onipresença, REST é um estilo de arquitetura que utiliza principalmente métodos HTTP. Ele permite fácil interação com recursos, tornando-se um padrão para uma infinidade de aplicativos e APIs modernas.
+* REST (Representational State Transfer): Um campeão de simplicidade e onipresença, REST é um estilo de arquitetura que utiliza principalmente métodos HTTP. Ele permite fácil interação com recursos, tornando-se um padrão para uma infinidade de aplicativos e APIs modernas.<br/>
+  Mais detalhes: [REST API Best Practices](https://github.com/wqueiroz/Architecture/blob/main/REST-API-Best-Practices/REST-API-Best-Practices.md)
 
 * SOAP (Protocolo Simples de Acesso a Objetos): SOAP, um concorrente de peso na arena de APIs, prospera em complexidade e poder. Ele emprega XML para definir a comunicação estruturada. Embora exija um cliente e servidor SOAP, ele compensa com sua força e robustez, muito parecido com um veículo off-road bem construído para enfrentar terrenos acidentados.
 
